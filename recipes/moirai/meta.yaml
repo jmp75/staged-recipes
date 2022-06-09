@@ -1,0 +1,52 @@
+{% set name = "moirai" %}
+{% set version = "1.1" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  # url: https://github.com/moirai/moirai/releases/download/{{ version }}/moirai-{{ version }}.tar.gz
+  # and otherwise fall back to archive:
+  url: https://github.com/csiro-hydroinformatics/moirai/archive/refs/tags/{{ version }}.tar.gz
+  sha256: b329353aee261ec42ddd57b7bb4ca5462186b2d132cdb2c9dacc9325899b85f3
+
+build:
+  number: 0
+
+requirements:
+  build:
+    - cmake
+    - make  # [not win]
+    # - pkg-config  # [not win]
+    # - gnuconfig  # [unix]
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+  run:
+    - curl # [win]
+    - libgcc # [unix]
+
+test:
+  files:
+    - CMakeLists.txt
+  commands:
+    - ls
+
+about:
+  home: https://github.com/csiro-hydroinformatics/moirai
+  summary: 'Manage C++ objects lifetime when exposed through a C API'
+  description: |
+    This C++ library is designed to help handling C++ objects from so called opaque pointers, via a C API, featuring:
+      * counting references via the C API to C++ domain objects
+      * handle C++ class inheritance even via opaque pointers
+      * mechanism for resilience to incorrect type casts
+      * thread-safe design
+  license: BSD-3-Clause
+  license_family: BSD
+  license_file: LICENSE.txt
+  doc_url: https://github.com/csiro-hydroinformatics/moirai/blob/master/doc/Walkthrough.md
+  dev_url: https://github.com/csiro-hydroinformatics/moirai
+
+extra:
+  recipe-maintainers:
+    - jmp75
