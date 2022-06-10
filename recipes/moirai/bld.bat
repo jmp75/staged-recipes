@@ -4,6 +4,7 @@ REM Build moirai.
 mkdir build
 cd build
 
+@REM following may be unncessary
 set PATH="%PREFIX%\bin";%PATH%
 
 :: Configure using the CMakeFiles
@@ -16,7 +17,5 @@ cmake -G "%CMAKE_GENERATOR%" ^
 if %errorlevel% neq 0 exit 1
 msbuild /p:Configuration=Release /v:q /clp:/v:q "INSTALL.vcxproj"
 if %errorlevel% neq 0 exit 1
-@REM xcopy /S /Y install\lib\*.* %LIBRARY_LIB%\
-@REM xcopy /S /Y install\include\*.* %LIBRARY_INC%\
 @REM if %errorlevel% neq 0 exit 1
 @REM del *.*
